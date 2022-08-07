@@ -6,7 +6,7 @@
 		"start": "next start",
 		"type-check": "tsc",
 		"prepare": "husky install",
-		"test": "jest --watch"
+		"test": "jest"
 	},
 	"dependencies": {
 		"next": "^12.2.4",
