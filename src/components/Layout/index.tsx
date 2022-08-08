@@ -1,15 +1,15 @@
-import React, { ReactNode } from 'react'
-import Link from 'next/link'
-import Head from 'next/head'
+import React, { ReactNode } from 'react';
+import Link from 'next/link';
+import Head from 'next/head';
 
-import GitHubCorner from '../GitHubCorner'
+import GitHubCorner from '../GitHubCorner';
 
-const PERFIL_GITHUB = 'https://github.com/davipguimaraes'
+const PERFIL_GITHUB = 'https://github.com/davipguimaraes';
 
 type Props = {
-	children?: ReactNode
-	title?: string
-}
+	children?: ReactNode;
+	title?: string;
+};
 
 const Layout = ({ children, title = 'Minha carteira digital' }: Props) => (
 	<div className="max-w-7xl mx-auto">
@@ -21,7 +21,7 @@ const Layout = ({ children, title = 'Minha carteira digital' }: Props) => (
 				content="initial-scale=1.0, width=device-width"
 			/>
 		</Head>
-		<header className='relative'>
+		<header className="relative">
 			<nav>
 				<Link href="/">
 					<a className="hover:underline">Home</a>
@@ -31,7 +31,8 @@ const Layout = ({ children, title = 'Minha carteira digital' }: Props) => (
 					<a className="hover:underline">Sobre o projeto</a>
 				</Link>{' '}
 			</nav>
-			<GitHubCorner projectUrl={`${PERFIL_GITHUB}/minha-carteira-digital`}></GitHubCorner>
+			<GitHubCorner
+				projectUrl={`${PERFIL_GITHUB}/minha-carteira-digital`}></GitHubCorner>
 		</header>
 		{children}
 		<footer>
@@ -42,12 +43,12 @@ const Layout = ({ children, title = 'Minha carteira digital' }: Props) => (
 					href={PERFIL_GITHUB}
 					className="underline text-emerald-300 hover:text-emerald-500"
 					target="_blank"
-				>
+					rel="noreferrer">
 					Davi P. Guimarães
 				</a>{' '}
 			</span>
 		</footer>
 	</div>
-)
+);
 
-export default Layout
+export default Layout;

@@ -1,5 +1,5 @@
-import Link from 'next/link'
-import Layout from '../src/components/Layout'
+import Link from 'next/link';
+import Layout from '../src/components/Layout';
 
 const SobreOProjetoPage = () => (
 	<Layout title="Sobre o projeto | Minha Carteira digital">
@@ -11,6 +11,6 @@ const SobreOProjetoPage = () => (
 			</Link>
 		</p>
 	</Layout>
-)
+);
 
-export default SobreOProjetoPage
+export default SobreOProjetoPage;

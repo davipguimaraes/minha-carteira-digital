@@ -1,5 +1,5 @@
-import Link from 'next/link'
-import Layout from '../src/components/Layout'
+import Link from 'next/link';
+import Layout from '../src/components/Layout';
 
 const IndexPage = () => (
 	<Layout title="Home | Minha carteira digital">
@@ -12,6 +12,6 @@ const IndexPage = () => (
 			</Link>
 		</p>
 	</Layout>
-)
+);
 
-export default IndexPage
+export default IndexPage;
