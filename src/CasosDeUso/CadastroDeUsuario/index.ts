@@ -13,7 +13,11 @@ const cadastrarUsuario = async (usuario: Usuario): Promise<void> => {
 		const { sucesso, mensagem } = validarUsuario(usuario);
 		if (sucesso) {
 			const hashDaSenha = preparaSenhaParaPersistencia(usuario.senha);
-			await repositorioDeUsuario.criar(usuario.login, hashDaSenha);
+			await repositorioDeUsuario.criar(
+				usuario.login,
+				usuario.nome,
+				hashDaSenha,
+			);
 
 			return;
 		} else {

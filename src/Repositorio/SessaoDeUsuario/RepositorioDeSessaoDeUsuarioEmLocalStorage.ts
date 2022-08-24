@@ -1,27 +1,25 @@
 import { RepositorioDeSessaoDeUsuario, SessaoDeUsuario } from '.';
-import RepositorioEmSessionStorage from '../RepositorioEmSessionStorage';
-
-const LOCAL_STORAGE_KEY = 'SessaoDeUsuario';
+import StorageConection from '../../infra/StorageConection';
 
 export default class RepositorioDeSessaoDeUsuarioEmLocalStorage
-	extends RepositorioEmSessionStorage<SessaoDeUsuario>
 	implements RepositorioDeSessaoDeUsuario
 {
-	constructor() {
-		super();
-		this.tableName = LOCAL_STORAGE_KEY;
+	private storageConnection: StorageConection<SessaoDeUsuario>;
+
+	constructor(_storageConection: StorageConection<SessaoDeUsuario>) {
+		this.storageConnection = _storageConection;
 	}
 
 	obterSessaoAtual(): Promise<SessaoDeUsuario> {
 		return new Promise((resolve) => {
-			resolve(this.obter());
+			resolve(this.storageConnection.obter());
 		});
 	}
 
 	iniciarNovaSessao(idUsuario?: string): Promise<SessaoDeUsuario> {
 		const novaSessao = new SessaoDeUsuario(idUsuario);
 
-		this.inserir(novaSessao);
+		this.storageConnection.inserir(novaSessao);
 
 		return new Promise((resolve) => {
 			resolve(novaSessao);
@@ -30,7 +28,7 @@ export default class RepositorioDeSessaoDeUsuarioEmLocalStorage
 
 	encerrarSessaoAtual(): Promise<void> {
 		return new Promise((resolve) => {
-			this.inserir(null);
+			this.storageConnection.inserir(null);
 			resolve();
 		});
 	}
