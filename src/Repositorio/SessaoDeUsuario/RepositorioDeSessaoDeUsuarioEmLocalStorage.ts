@@ -1,5 +1,6 @@
-import { RepositorioDeSessaoDeUsuario, SessaoDeUsuario } from '.';
+import { RepositorioDeSessaoDeUsuario } from '.';
 import StorageConection from '../../infra/StorageConection';
+import { SessaoDeUsuario } from '../../Modelo/SessaoDeUsuario';
 
 export default class RepositorioDeSessaoDeUsuarioEmLocalStorage
 	implements RepositorioDeSessaoDeUsuario
@@ -12,7 +13,12 @@ export default class RepositorioDeSessaoDeUsuarioEmLocalStorage
 
 	obterSessaoAtual(): Promise<SessaoDeUsuario> {
 		return new Promise((resolve) => {
-			resolve(this.storageConnection.obter());
+			let sessaAtual = this.storageConnection.obter();
+			if (sessaAtual) {
+				sessaAtual = new SessaoDeUsuario();
+			}
+
+			resolve(sessaAtual);
 		});
 	}
 

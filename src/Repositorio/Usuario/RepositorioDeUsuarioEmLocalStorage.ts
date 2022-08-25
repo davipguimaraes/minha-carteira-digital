@@ -15,12 +15,13 @@ export default class RepositorioDeUsuarioEmLocalStorage
 		const usuarios = new Set(this.storageConnection.obter());
 
 		let usuario: Usuario;
-		usuarios.forEach(({ login, senha, nome }) => {
+		usuarios.forEach(({ login, senha, nome, id }) => {
 			if (login === loginProcurado) {
 				usuario = new Usuario();
 				usuario.login = login;
 				usuario.senha = senha;
 				usuario.nome = nome;
+				usuario.id = id;
 
 				return false;
 			}
@@ -55,10 +56,25 @@ export default class RepositorioDeUsuarioEmLocalStorage
 			}
 		});
 	}
-	buscarPorId(userId: string): Promise<Usuario[]> {
-		throw new Error('Method not implemented.');
-	}
-	autenticar(login: string, senha: string): Promise<boolean> {
-		throw new Error('Method not implemented.');
+
+	autenticar(login: string, senha: string): Promise<Usuario> {
+		return new Promise((resolve, reject) => {
+			try {
+				const usuarioComEsseLogin = this.buscarUsuarioLogin(login);
+				if (senha == usuarioComEsseLogin.senha) {
+					const usuario = new Usuario();
+					usuario.id = usuarioComEsseLogin.id;
+
+					usuario.login = usuarioComEsseLogin.login;
+					usuario.nome = usuarioComEsseLogin.nome;
+
+					resolve(usuario);
+				} else {
+					throw new Error();
+				}
+			} catch (error) {
+				reject('Login não efetuado');
+			}
+		});
 	}
 }

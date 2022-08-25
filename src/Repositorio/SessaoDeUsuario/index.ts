@@ -1,12 +1,4 @@
-export class SessaoDeUsuario {
-	idUsuario?: string;
-	usuarioAutenticado: boolean;
-
-	constructor(idUsuario?: string) {
-		this.idUsuario = idUsuario;
-		this.usuarioAutenticado = idUsuario != undefined;
-	}
-}
+import { SessaoDeUsuario } from '../../Modelo/SessaoDeUsuario';
 
 export interface RepositorioDeSessaoDeUsuario {
 	obterSessaoAtual(): Promise<SessaoDeUsuario>;

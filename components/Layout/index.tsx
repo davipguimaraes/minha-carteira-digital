@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 
 import GitHubCorner from '../GitHubCorner';
+import LoginSummary from '../Autenticacao/loginSummary';
 
 const PERFIL_GITHUB = 'https://github.com/davipguimaraes';
 
@@ -25,7 +26,7 @@ const Layout = ({ children, title = 'Minha carteira digital' }: Props) => (
 
 		<div className="flex flex-col h-screen gap-4">
 			<header className="relative px-4">
-				<div className="max-w-7xl mx-auto py-2 border-solid border-b-2 border-emerald-300">
+				<nav className="max-w-7xl mx-auto py-2 border-solid border-b-2 border-emerald-300 flex items-center justify-between">
 					<Link href="/">
 						<a className="cursor-pointer">
 							<Image
@@ -36,10 +37,11 @@ const Layout = ({ children, title = 'Minha carteira digital' }: Props) => (
 							/>
 						</a>
 					</Link>
-					<GitHubCorner
-						projectUrl={`${PERFIL_GITHUB}/minha-carteira-digital`}
-					/>
-				</div>
+					<LoginSummary></LoginSummary>
+				</nav>
+				<GitHubCorner
+					projectUrl={`${PERFIL_GITHUB}/minha-carteira-digital`}
+				/>
 			</header>
 			<main className="flex-1 overflow-y-auto w-full max-w-7xl mx-auto px-4">
 				{children}

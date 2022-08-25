@@ -1,0 +1,31 @@
+import SessionStorageConection from '../../infra/SessionStorageConection';
+import { RepositorioDeSessaoDeUsuario } from '../../Repositorio/SessaoDeUsuario';
+import RepositorioDeSessaoDeUsuarioEmLocalStorage from '../../Repositorio/SessaoDeUsuario/RepositorioDeSessaoDeUsuarioEmLocalStorage';
+import { RepositorioDeUsuario } from '../../Repositorio/Usuario';
+import RepositorioDeUsuarioEmLocalStorage from '../../Repositorio/Usuario/RepositorioDeUsuarioEmLocalStorage';
+import sha256 from '../../utils/sha256';
+
+export interface loginFactory {
+	repositorioDeUsuario: RepositorioDeUsuario;
+	preparaSenhaParaPersistencia(text: string): string;
+	repositorioDeSessaoDoUsuario: RepositorioDeSessaoDeUsuario;
+}
+
+const LoginFactory = (): loginFactory => {
+	const preparaSenhaParaPersistencia = sha256;
+	const repositorioDeUsuario = new RepositorioDeUsuarioEmLocalStorage(
+		new SessionStorageConection('usuarios'),
+	);
+	const repositorioDeSessaoDoUsuario =
+		new RepositorioDeSessaoDeUsuarioEmLocalStorage(
+			new SessionStorageConection('sessao_usuarios'),
+		);
+
+	return {
+		repositorioDeUsuario,
+		preparaSenhaParaPersistencia,
+		repositorioDeSessaoDoUsuario,
+	};
+};
+
+export default LoginFactory;

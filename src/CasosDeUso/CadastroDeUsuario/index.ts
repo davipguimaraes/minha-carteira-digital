@@ -25,7 +25,7 @@ const cadastrarUsuario = async (usuario: Usuario): Promise<void> => {
 			throw Error(mensagemEmTexto);
 		}
 	} catch (error) {
-		throw error;
+		throw new Error('Cadastro não efetuado');
 	}
 };
 

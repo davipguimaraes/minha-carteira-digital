@@ -30,9 +30,9 @@ const CadastroDeUsuarioView = ({
 
 		const usuario = new Usuario();
 
-		usuario.login = login$?.value;
-		usuario.nome = nome$?.value;
-		usuario.senha = senha$?.value;
+		usuario.login = login$?.value.trim();
+		usuario.nome = nome$?.value.trim();
+		usuario.senha = senha$?.value.trim();
 
 		const validacao = validaUsuario(usuario);
 		if (validacao.sucesso) {
@@ -43,7 +43,6 @@ const CadastroDeUsuarioView = ({
 				const resultado = await cadastrarNovoUsuario(usuario);
 				setResultadoDeCadastro(resultado);
 			} catch (error) {
-				console.log(error);
 				setResultadoDeCadastro({
 					mensagem: 'Cadastro não efetuado.',
 					status: 'falha',
@@ -58,7 +57,7 @@ const CadastroDeUsuarioView = ({
 		<div>
 			<h1 className="text-2xl font-bold mb-4">Cadastre-se</h1>
 			{resultadoDeCadastro && resultadoDeCadastro.status == 'sucesso' ? (
-				<p className={`text-sm text-green-400`}>
+				<p className={`text-lg text-green-400`}>
 					{resultadoDeCadastro.mensagem}
 				</p>
 			) : (
