@@ -3,6 +3,7 @@ import { RepositorioDeSessaoDeUsuario } from '../../Repositorio/SessaoDeUsuario'
 import RepositorioDeSessaoDeUsuarioEmLocalStorage from '../../Repositorio/SessaoDeUsuario/RepositorioDeSessaoDeUsuarioEmLocalStorage';
 import { RepositorioDeUsuario } from '../../Repositorio/Usuario';
 import RepositorioDeUsuarioEmLocalStorage from '../../Repositorio/Usuario/RepositorioDeUsuarioEmLocalStorage';
+import { CodificadorDeStringEmBase64 } from '../../utils/codificarString';
 import sha256 from '../../utils/sha256';
 
 export interface loginFactory {
@@ -14,7 +15,10 @@ export interface loginFactory {
 const LoginFactory = (): loginFactory => {
 	const preparaSenhaParaPersistencia = sha256;
 	const repositorioDeUsuario = new RepositorioDeUsuarioEmLocalStorage(
-		new SessionStorageConection('usuarios'),
+		new SessionStorageConection(
+			'usuarios',
+			new CodificadorDeStringEmBase64(),
+		),
 	);
 	const repositorioDeSessaoDoUsuario =
 		new RepositorioDeSessaoDeUsuarioEmLocalStorage(
