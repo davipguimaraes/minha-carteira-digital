@@ -3,7 +3,7 @@ import { Usuario } from '../../src/Modelo/Usuario';
 import sha256 from '../../src/utils/sha256';
 
 describe('Validação de dados do Usuário', () => {
-	it('Cadastro com sucesso', () => {
+	it('Valida usuario com sucesso', () => {
 		const usuario = new Usuario();
 		usuario.login = 'usuario';
 		usuario.senha = '12345678';

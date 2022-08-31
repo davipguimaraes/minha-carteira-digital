@@ -16,13 +16,18 @@ const LoginFactory = (): loginFactory => {
 	const preparaSenhaParaPersistencia = sha256;
 	const repositorioDeUsuario = new RepositorioDeUsuarioEmLocalStorage(
 		new SessionStorageConection(
+			window.localStorage,
 			'usuarios',
 			new CodificadorDeStringEmBase64(),
 		),
 	);
 	const repositorioDeSessaoDoUsuario =
 		new RepositorioDeSessaoDeUsuarioEmLocalStorage(
-			new SessionStorageConection('sessao_usuarios'),
+			new SessionStorageConection(
+				window.sessionStorage,
+				'sessao_usuarios',
+				new CodificadorDeStringEmBase64(),
+			),
 		);
 
 	return {

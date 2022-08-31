@@ -25,9 +25,9 @@ const efetuarLogin = async (
 			hashDaSenha,
 		);
 
-		return await repositorioDeSessaoDoUsuario.iniciarNovaSessao(usuario.id);
+		await repositorioDeSessaoDoUsuario.iniciarNovaSessao(usuario.id);
+		return await obterSessaoAtual();
 	} catch (error) {
-		console.log(error);
 		throw error;
 	}
 };
@@ -42,8 +42,16 @@ const efetuarLogout = async (): Promise<void> => {
 };
 
 const obterSessaoAtual = async (): Promise<SessaoDeUsuario> => {
-	const { repositorioDeSessaoDoUsuario } = LoginFactory();
-	return await repositorioDeSessaoDoUsuario.obterSessaoAtual();
+	const { repositorioDeSessaoDoUsuario, repositorioDeUsuario } =
+		LoginFactory();
+	const sessao = await repositorioDeSessaoDoUsuario.obterSessaoAtual();
+
+	if (sessao.usuarioAutenticado) {
+		sessao.nomeUsuario = (
+			await repositorioDeUsuario.obterUsuarioParaSessao(sessao.idUsuario)
+		).nome;
+	}
+	return sessao;
 };
 
 export { efetuarLogin, efetuarLogout, obterSessaoAtual };

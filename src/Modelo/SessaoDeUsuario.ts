@@ -1,6 +1,7 @@
 export class SessaoDeUsuario {
-	idUsuario?: string;
 	usuarioAutenticado: boolean;
+	idUsuario?: string;
+	nomeUsuario?: string;
 
 	constructor(idUsuario?: string) {
 		this.idUsuario = idUsuario;

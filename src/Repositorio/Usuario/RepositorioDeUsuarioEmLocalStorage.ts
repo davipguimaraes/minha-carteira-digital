@@ -11,6 +11,25 @@ export default class RepositorioDeUsuarioEmLocalStorage
 		this.storageConnection = _storageConection;
 	}
 
+	obterUsuarioParaSessao(idSearch: string): Promise<Usuario> {
+		return new Promise((resolve, reject) => {
+			const usuarios = new Set(this.storageConnection.obter());
+
+			let usuario: Usuario;
+			usuarios.forEach(({ login, nome, id }) => {
+				if (id === idSearch) {
+					usuario = new Usuario();
+					usuario.login = login;
+					usuario.nome = nome;
+					usuario.id = id;
+
+					return false;
+				}
+			});
+			resolve(usuario);
+		});
+	}
+
 	private buscarUsuarioLogin(loginProcurado: string) {
 		const usuarios = new Set(this.storageConnection.obter());
 

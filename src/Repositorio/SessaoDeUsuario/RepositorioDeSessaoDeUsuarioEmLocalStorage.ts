@@ -14,7 +14,8 @@ export default class RepositorioDeSessaoDeUsuarioEmLocalStorage
 	obterSessaoAtual(): Promise<SessaoDeUsuario> {
 		return new Promise((resolve) => {
 			let sessaAtual = this.storageConnection.obter();
-			if (sessaAtual) {
+
+			if (!sessaAtual) {
 				sessaAtual = new SessaoDeUsuario();
 			}
 

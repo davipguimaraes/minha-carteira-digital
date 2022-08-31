@@ -12,6 +12,7 @@ export interface cadastroDeUsuarioFactory {
 const CadastroDeUsuarioFactory = (): cadastroDeUsuarioFactory => {
 	const repositorioDeUsuario = new RepositorioDeUsuarioEmLocalStorage(
 		new SessionStorageConection(
+			window.localStorage,
 			'usuarios',
 			new CodificadorDeStringEmBase64(),
 		),

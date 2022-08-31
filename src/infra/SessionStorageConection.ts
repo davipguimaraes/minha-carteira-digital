@@ -2,10 +2,16 @@ import { CodificadorDeString } from '../utils/codificarString';
 import StorageConection from './StorageConection';
 
 export default class SessionStorageConection<T> implements StorageConection<T> {
+	private storage: Storage;
 	private tableName: string;
 	private codificadorDeString: CodificadorDeString;
 
-	constructor(tableName: string, codificadorDeString?: CodificadorDeString) {
+	constructor(
+		storage: Storage,
+		tableName: string,
+		codificadorDeString?: CodificadorDeString,
+	) {
+		this.storage = storage;
 		this.tableName = tableName;
 		this.codificadorDeString = codificadorDeString;
 	}
@@ -16,12 +22,12 @@ export default class SessionStorageConection<T> implements StorageConection<T> {
 			dadoEmTexto = this.codificadorDeString.codificar(dadoEmTexto);
 		}
 
-		window.sessionStorage.setItem(this.tableName, dadoEmTexto);
+		this.storage.setItem(this.tableName, dadoEmTexto);
 	}
 
 	obter() {
 		try {
-			let resultado = window.sessionStorage.getItem(this.tableName);
+			let resultado = this.storage.getItem(this.tableName);
 			if (this.codificadorDeString) {
 				resultado = this.codificadorDeString.decodificar(resultado);
 			}

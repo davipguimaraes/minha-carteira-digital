@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React, {
 	FunctionComponent,
 	ReactNode,
@@ -19,23 +20,34 @@ SessaoDeUsuarioStateContext.displayName = 'SessaoDeUsuarioState';
 
 interface SessaoDeUsuarioDispatchContextProps {
 	setSessaoDeUsuario(sessaoDeUsuario: SessaoDeUsuario): void;
+	encerrarSessao(): Promise<void>;
 }
 const SessaoDeUsuarioDispatchContext =
 	React.createContext<SessaoDeUsuarioDispatchContextProps>({
 		setSessaoDeUsuario: () => {},
+		encerrarSessao: async () => {},
 	});
 SessaoDeUsuarioDispatchContext.displayName = 'SessaoDeUsuarioDispatch';
 
 interface SessaoDeUsuarioContextProviderProps {
 	children?: ReactNode;
 	obterSessaoDeUsuario(): Promise<SessaoDeUsuario>;
+	efetuarLogout(): Promise<void>;
 }
+
 export const SessaoDeUsuarioContextProvider: FunctionComponent<
 	SessaoDeUsuarioContextProviderProps
-> = ({ children, obterSessaoDeUsuario }) => {
+> = ({ children, obterSessaoDeUsuario, efetuarLogout }) => {
+	const router = useRouter();
 	const [sessaoDeUsuario, setSessaoDeUsuario] = useState<SessaoDeUsuario>();
 
 	const _obterSessaoDeUsuario = async () => {
+		const sessaoAtual = await obterSessaoDeUsuario();
+		setSessaoDeUsuario(sessaoAtual);
+	};
+
+	const encerrarSessao = async () => {
+		await efetuarLogout();
 		const sessaoAtual = await obterSessaoDeUsuario();
 		setSessaoDeUsuario(sessaoAtual);
 	};
@@ -44,11 +56,19 @@ export const SessaoDeUsuarioContextProvider: FunctionComponent<
 		_obterSessaoDeUsuario();
 	}, []);
 
+	// todo refatorar
+	useEffect(() => {
+		router.push('/');
+	}, [sessaoDeUsuario]);
+
 	return (
 		<SessaoDeUsuarioStateContext.Provider
 			value={{ sessaoDeUsuario: sessaoDeUsuario }}>
 			<SessaoDeUsuarioDispatchContext.Provider
-				value={{ setSessaoDeUsuario: setSessaoDeUsuario }}>
+				value={{
+					setSessaoDeUsuario: setSessaoDeUsuario,
+					encerrarSessao: encerrarSessao,
+				}}>
 				{children}
 			</SessaoDeUsuarioDispatchContext.Provider>
 		</SessaoDeUsuarioStateContext.Provider>
@@ -66,6 +86,5 @@ export const useSessaoDeUsuarioState = () => {
 	return context;
 };
 export const useSessaoDeUsuarioDispatch = () => {
-	const context = useContext(SessaoDeUsuarioDispatchContext);
-	return context;
+	return useContext(SessaoDeUsuarioDispatchContext);
 };

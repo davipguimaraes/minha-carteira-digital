@@ -12,8 +12,8 @@ const LoginUsuario = () => {
 	): Promise<resultadoDeOpepracao> => {
 		try {
 			const sessao = await efetuarLogin(login, senha);
-			setSessaoDeUsuario(sessao);
 
+			setSessaoDeUsuario(sessao);
 			return {
 				status: 'sucesso',
 				mensagem: 'Login efetuado com sucesso',
