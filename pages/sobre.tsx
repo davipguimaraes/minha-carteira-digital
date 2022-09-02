@@ -1,16 +1,24 @@
-import Link from 'next/link'
-import Layout from '../src/components/Layout'
+import Link from 'next/link';
+import Layout from '../components/Layout';
 
 const SobreOProjetoPage = () => (
 	<Layout title="Sobre o projeto | Minha Carteira digital">
-		<h1 className="text-3xl font-bold text-emerald-400">Sobre o projeto</h1>
-		<p>This is the about page</p>
-		<p>
+		<div className="text-center">
+			<h1 className="text-3xl font-bold mb-4">Sobre o projeto</h1>
+			<p>
+				Esse projeto foi desenvolvido para demonstração de habilidades.
+			</p>
+			<p>
+				Os valores e transações realizadas nessa aplicação são
+				fiquiticios.
+			</p>
 			<Link href="/">
-				<a className="hover:underline">Go home</a>
+				<a className="block mt-4 text-emerald-500 hover:underline">
+					voltar ao projeto
+				</a>
 			</Link>
-		</p>
+		</div>
 	</Layout>
-)
+);
 
-export default SobreOProjetoPage
+export default SobreOProjetoPage;
